@@ -1,0 +1,33 @@
+name: 'Replace directory in repo'
+description: 'Update a branch to the current state of another and replace a directory then commit'
+inputs:
+  base-branch:
+    description: 'The reference branch to source files from'
+    required: true
+  target-branch:
+    description: 'Name of the interim branch to base the PR off'
+    required: true
+  replacement-dir:
+    description: 'Name of the directory to replace'
+    required: true
+  commit-username:
+    description: '[Optional] Username for the commit. Defaults to the destination username'
+    required: false
+    default: ''
+  commit-email:
+    description: 'Email for the commit'
+    required: true
+  commit-message:
+    description: '[Optional] commit message for the output repository. ORIGIN_COMMIT is replaced by the URL@commit in the origin repo'
+    default: 'Update from ORIGIN_COMMIT'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.base-branch }}
+    - ${{ inputs.target-branch }}
+    - ${{ inputs.replacement-dir }}
+    - ${{ inputs.commit-username }}
+    - ${{ inputs.commit-email }}
+    - ${{ inputs.commit-message }}
