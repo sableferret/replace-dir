@@ -7,7 +7,10 @@ inputs:
   target-branch:
     description: 'Name of the interim branch to base the PR off'
     required: true
-  replacement-dir:
+  source-dir:
+    description: 'Name of the directory to source replacement files'
+    required: true
+  target-dir:
     description: 'Name of the directory to replace'
     required: true
   commit-username:
@@ -27,7 +30,8 @@ runs:
   args:
     - ${{ inputs.base-branch }}
     - ${{ inputs.target-branch }}
-    - ${{ inputs.replacement-dir }}
+    - ${{ inputs.source-dir }}
+    - ${{ inputs.target-dir }}
     - ${{ inputs.commit-username }}
     - ${{ inputs.commit-email }}
     - ${{ inputs.commit-message }}
