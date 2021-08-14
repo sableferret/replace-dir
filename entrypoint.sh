@@ -41,7 +41,7 @@ git diff-index --quiet HEAD || git commit --message "$COMMIT_MESSAGE"
 
 echo "Push updates"
 git remote add botpub "${remote_repo}"
-git push botpub ${DESTINATION_BRANCH}
+git push botpub ${DESTINATION_BRANCH} --force
 
 echo "Issuing PR"
 gh pr create --base $BASE_BRANCH --title "[ROBOT] Update" --body "Add the reason here"
