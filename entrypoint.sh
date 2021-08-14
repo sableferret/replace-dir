@@ -18,7 +18,7 @@ remote_repo="https://${GITHUB_ACTOR}:${API_TOKEN_GITHUB}@github.com/${GITHUB_REP
 git config --global user.email "$COMMIT_EMAIL"
 git config --global user.name "lab@bot.com"
 git config http.sslVerify false
-git remote add botpub "${remote_repo}"
+git remote add publisher "${remote_repo}"
 git show-ref # useful for debugging
 git branch --verbose
 
@@ -39,9 +39,9 @@ echo "Build commit message"
 # don't commit if no changes were made
 git diff-index --quiet HEAD || git commit --message "$COMMIT_MESSAGE"
 
-echo "Setup destination branch"
-# --set-upstream: sets the branch when pushing to a branch that does not exist
-git push botpub --set-upstream "$DESTINATION_BRANCH"
+echo "Push updates"
+git pull --rebase publisher ${DESTINATION_BRANCH}
+git push publisher ${DESTINATION_BRANCH}
 
 echo "Issuing PR"
 gh pr create --base $BASE_BRANCH --title "[ROBOT] Update" --body "Add the reason here"
