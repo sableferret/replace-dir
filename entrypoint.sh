@@ -14,7 +14,7 @@ COMMIT_EMAIL="$6"
 COMMIT_MESSAGE="$7"
 
 echo "Setting up git"
-remote_repo="https://${GITHUB_ACTOR}:${API_TOKEN_GITHUB}@github.com/${GITHUB_REPOSITORY}.git" "$CLONE_DIRECTORY"
+remote_repo="https://${GITHUB_ACTOR}:${API_TOKEN_GITHUB}@github.com/${GITHUB_REPOSITORY}.git"
 git config --global user.email "$COMMIT_EMAIL"
 git config --global user.name "lab@bot.com"
 git config http.sslVerify false
