@@ -32,6 +32,7 @@ cp -rvf $SOURCE_DIRECTORY "$CLONE_DIRECTORY/$TARGET_DIRECTORY"
 
 echo "Commiting changes"
 cd "$CLONE_DIRECTORY"
+git checkout -B "$DESTINATION_BRANCH"
 git add .
 
 echo "Build commit message"
