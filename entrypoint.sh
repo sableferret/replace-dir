@@ -44,4 +44,4 @@ git remote add botpub "${remote_repo}"
 git push botpub ${DESTINATION_BRANCH} --force
 
 echo "Issuing PR"
-gh pr create --base $BASE_BRANCH --title "[ROBOT] Update" --body "Add the reason here"
+git request-pull ${BASE_BRANCH} "${remote_repo}" ${DESTINATION_BRANCH}
