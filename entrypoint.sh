@@ -16,10 +16,11 @@ COMMIT_MESSAGE="$7"
 echo "Setting up git"
 git config --global user.email "$COMMIT_EMAIL"
 git config --global user.name "lab@bot.com"
+git config http.sslVerify false
 
 echo "Building clone target directory"
 CLONE_DIRECTORY=$(mktemp -d)
-git clone --single-branch --branch "$BASE_BRANCH" "https://$API_TOKEN_GITHUB@github.com/$GITHUB_REPOSITORY.git" "$CLONE_DIRECTORY"
+git clone --single-branch --branch "$BASE_BRANCH" "https://${GITHUB_ACTOR}:${API_TOKEN_GITHUB}@github.com/${GITHUB_REPOSITORY}.git" "$CLONE_DIRECTORY"
 
 echo "Replacing target directory"
 rm -rf "$CLONE_DIRECTORY/$TARGET_DIRECTORY"
