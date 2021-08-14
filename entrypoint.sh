@@ -14,28 +14,33 @@ COMMIT_EMAIL="$6"
 COMMIT_MESSAGE="$7"
 
 echo "Setting up git"
+remote_repo="https://${GITHUB_ACTOR}:${API_TOKEN_GITHUB}@github.com/${GITHUB_REPOSITORY}.git" "$CLONE_DIRECTORY"
 git config --global user.email "$COMMIT_EMAIL"
 git config --global user.name "lab@bot.com"
 git config http.sslVerify false
+git remote add botpub "${remote_repo}"
+git show-ref # useful for debugging
+git branch --verbose
 
 echo "Building clone target directory"
 CLONE_DIRECTORY=$(mktemp -d)
-git clone --single-branch --branch "$BASE_BRANCH" "https://${GITHUB_ACTOR}:${API_TOKEN_GITHUB}@github.com/${GITHUB_REPOSITORY}.git" "$CLONE_DIRECTORY"
+git clone --branch "$BASE_BRANCH" "${remote_repo}" "$CLONE_DIRECTORY"
 
 echo "Replacing target directory"
 rm -rf "$CLONE_DIRECTORY/$TARGET_DIRECTORY"
 cp -rvf $SOURCE_DIRECTORY "$CLONE_DIRECTORY/$TARGET_DIRECTORY"
 
-
 echo "Commiting changes"
 cd "$CLONE_DIRECTORY"
 git add .
 
+echo "Build commit message"
 # don't commit if no changes were made
 git diff-index --quiet HEAD || git commit --message "$COMMIT_MESSAGE"
 
+echo "Setup destination branch"
 # --set-upstream: sets the branch when pushing to a branch that does not exist
-git push origin --set-upstream "$DESTINATION_BRANCH"
+git push botpub --set-upstream "$DESTINATION_BRANCH"
 
 echo "Issuing PR"
 gh pr create --base $BASE_BRANCH --title "[ROBOT] Update" --body "Add the reason here"
