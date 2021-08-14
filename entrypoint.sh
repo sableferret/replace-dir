@@ -15,7 +15,7 @@ COMMIT_MESSAGE="$7"
 
 echo "Setting up git"
 git config --global user.email "$COMMIT_EMAIL"
-git config --global user.name "$DESTINATION_USERNAME"
+git config --global user.name "lab@bot.com"
 
 echo "Building clone target directory"
 CLONE_DIRECTORY=$(mktemp -d)
