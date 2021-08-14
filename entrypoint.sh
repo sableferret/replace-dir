@@ -43,5 +43,4 @@ echo "Push updates"
 git remote add botpub "${remote_repo}"
 git push botpub ${DESTINATION_BRANCH} --force
 
-echo "Issuing PR"
-git request-pull ${BASE_BRANCH} "${remote_repo}" ${DESTINATION_BRANCH}
+echo "Completed"
